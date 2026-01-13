@@ -1,0 +1,16 @@
+# Sensitive Info
+.env
+__pycache__/
+*.pyc
+
+# Database
+app.db
+*.sqlite
+
+# Virtual Env
+venv/
+env/
+.venv/
+
+# OS specific
+.DS_Store

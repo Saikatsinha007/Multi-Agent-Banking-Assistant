@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoBank AI Assistant</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar (Optional for desktop, hidden on mobile) -->
+        <div class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>NeoBank</span>
+            </div>
+            <div class="menu-item active"><i class="fa-solid fa-comments"></i> Chat Support</div>
+            <div class="menu-item"><i class="fa-solid fa-chart-line"></i> Dashboard</div>
+            <div class="menu-item"><i class="fa-solid fa-gear"></i> Settings</div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-interface">
+            <div class="chat-header">
+                <div class="agent-info">
+                    <div class="avatar-wrapper">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=bankagent" alt="Bot Avatar">
+                        <span class="status-indicator online"></span>
+                    </div>
+                    <div>
+                        <h2>Banking Assistant</h2>
+                        <span class="status-text">Always here to help</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="clear-chat" title="Clear History"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            </div>
+
+            <div class="chat-body" id="chat-box">
+                <!-- Welcome Message -->
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>👋 Hello! I'm your personal banking assistant. How can I help you today?</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Suggestions (Will fade out after interaction) -->
+                <div class="quick-actions" id="quick-actions">
+                    <button onclick="sendQuickMessage('Check my account balance')">💰 Check Balance</button>
+                    <button onclick="sendQuickMessage('Show recent transactions')">📜 Recent Transactions</button>
+                    <button onclick="sendQuickMessage('What are the branch hours?')">🕒 Branch Hours</button>
+                    <button onclick="sendQuickMessage('Apply for a personal loan')">📝 Apply for Loan</button>
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Type your request here..." autocomplete="off">
+                    <button id="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
