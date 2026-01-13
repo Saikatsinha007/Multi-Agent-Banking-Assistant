@@ -13,8 +13,9 @@ This project implements a "NeoBank" style system where customers can interact wi
 *   **📝 Service Request Management**: Submit loan applications and service requests via chat.
 *   **📊 Admin Dashboard**: A real-time Streamlit dashboard for bank staff to view metrics, approve/reject requests, and analyze data.
   
-<img width="1371" height="838" alt="Screenshot 2026-01-13 095440" src="https://github.com/user-attachments/assets/09103a77-7a26-45f2-8c9f-56b360097be2" />
-<img width="1650" height="743" alt="Screenshot 2026-01-06 160449" src="https://github.com/user-attachments/assets/3a18484e-6532-4bc2-b98b-9fed06d81aad" />
+<img width="871" height="678" alt="Screenshot 2026-01-13 095440" src="https://github.com/user-attachments/assets/09103a77-7a26-45f2-8c9f-56b360097be2" />
+<img width="871" height="678" alt="Screenshot 2026-01-13 095502" src="https://github.com/user-attachments/assets/1e0a21ef-814e-499a-b9de-d99c02287963" />
+
 
 ---
 
