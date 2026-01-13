@@ -1,60 +1,158 @@
 # 🏦 Agentic AI Banking System
 
-A chat-based AI banking assistant that handles customer support, account inquiries, and loan services.
+A comprehensive, AI-powered banking assistant that combines a chat interface for customer interaction with a powerful backend and an administrative dashboard for operations management.
 
-## 🏗 System Architecture
+## 📖 Overview
 
-- **Frontend**: HTML/JS Chat Interface
-- **Backend**: FastAPI (Python)
-- **Database**: SQLite (SQLAlchemy)
-- **AI Agent**: Google Gemini 1.5 Flash
-- **Dashboard**: Streamlit
+This project implements a "NeoBank" style system where customers can interact with an AI agent to check accounts, transfer money, apply for loans, and get support. The system uses an **Agentic Architecture** to route user intents to specialized agents.
 
-### Agent Routing
-The system uses an **Orchestrator** to classify user intent into three categories:
-1.  **Customer Support**: Handles FAQs (Generative).
-2.  **Accounts**: Fetches balance and transaction history (Tool Calling).
-3.  **Loans & Services**: Submits loan applications and service requests (Tool Calling).
+### Key Features
+*   **🤖 Intelligent Chat Agent**: Powered by Google Gemini 1.5 Flash, capable of handling natural language queries.
+*   **🛣️ Smart Routing**: An Orchestrator classifies user requests to direct them to the correct specialist agent (Support, Accounts, or Loans).
+*   **💳 Core Banking Operations**: Check balances, view transaction history, and detailed mock financial data.
+*   **📝 Service Request Management**: Submit loan applications and service requests via chat.
+*   **📊 Admin Dashboard**: A real-time Streamlit dashboard for bank staff to view metrics, approve/reject requests, and analyze data.
 
-## 🚀 How to Run
+---
 
-### 1. Prerequisites
-- Python 3.9+
-- A Google Gemini API Key
+## 🏗️ System Architecture
 
-### 2. Setup
-1.  Install dependencies:
+The system is built using a modern decoupled architecture:
+
+```mermaid
+graph TD
+    User([👤 User]) -->|Chat| Frontend[💻 Frontend (HTML/JS)]
+    Staff([👨‍💼 Bank Staff]) -->|Manage| Dashboard[📊 Streamlit Dashboard]
+    
+    Frontend -->|POST /chat| Backend[🚀 Backend API (FastAPI)]
+    
+    subgraph "Backend System"
+        Backend --> Orchestrator{🧭 Orchestrator}
+        Orchestrator -->|General Queries| Support[💬 Support Agent]
+        Orchestrator -->|Balance/Txns| Accounts[💰 Accounts Agent]
+        Orchestrator -->|Loans/Services| Loans[📝 Loans Agent]
+        
+        Accounts <--> DB[(🗄️ SQLite Database)]
+        Loans <--> DB
+    end
+    
+    Dashboard <--> DB
+```
+
+### Component Breakdown
+1.  **Frontend**: A lightweight, responsive chat interface built with vanilla HTML/CSS/JavaScript. It maintains chat history and renders Markdown responses.
+2.  **Backend (FastAPI)**: The core server handling API requests. It initializes the database, manages the specialized agents, and exposes the `/chat` endpoint.
+3.  **Database (SQLite)**: A relational database storing Users, Accounts, Transactions, and Service Requests. It uses SQLAlchemy ORM.
+4.  **Dashboard (Streamlit)**: An administrative tool connecting directly to the database to visualize KPIs, transaction logs, and manage service request workflows.
+
+---
+
+## 📂 Project Structure
+
+```text
+banking-agent-2/
+├── backend/                # FastAPI Application & Logic
+│   ├── agents.py           # AI Agents (Support, Accounts, Loans)
+│   ├── database.py         # DB Connection & Session
+│   ├── main.py             # API Entry Point & Routing
+│   ├── models.py           # SQLAlchemy Database Models
+│   └── ...
+├── dashboard/              # Streamlit Admin Panel
+│   └── app.py              # Dashboard logic & UI
+├── frontend/               # Customer Facing Chat UI
+│   ├── index.html          # Chat Interface
+│   └── app.js              # Frontend Logic
+├── .env                    # Environment Variables (API Keys)
+├── app.db                  # SQLite Database (Auto-generated)
+├── requirements.txt        # Python Dependencies
+└── README.md               # Project Documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up and run the system locally.
+
+### 1️⃣ Prerequisites
+*   Python 3.9 or higher installed.
+*   A Google Gemini API Key (Get one [here](https://aistudio.google.com/)).
+
+### 2️⃣ Installation
+
+1.  **Clone the repository** (if applicable) or navigate to the project folder.
+2.  **Install dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
-2.  Set your API Key in `.env`:
-    ```
-    GEMINI_API_KEY=your_actual_api_key_here
-    ```
+3.  **Configure Environment**:
+    *   Create a `.env` file in the root directory.
+    *   Add your Gemini API key:
+        ```ini
+        GEMINI_API_KEY=your_actual_api_key_here
+        ```
 
-### 3. Run Backend
-Start the FastAPI server:
+### 3️⃣ Running the Application
+
+You need to run the Backend, Frontend, and Dashboard in separate terminals.
+
+#### Terminal 1: backend 🚀
+Start the FastAPI server. This will also create `app.db` and seed it with initial data if missing.
 ```bash
 uvicorn backend.main:app --reload
 ```
-The API will run at `http://127.0.0.1:8000`.
+*   Server runs at: `http://127.0.0.1:8000`
+*   API Docs: `http://127.0.0.1:8000/docs`
 
-### 4. Run Dashboard
-Start the operations dashboard:
+#### Terminal 2: Dashboard 📊
+Launch the admin dashboard.
 ```bash
 streamlit run dashboard/app.py
 ```
+*   Opens automatically in browser at `http://localhost:8501`
 
-### 5. Start Chat
-Open `frontend/index.html` in your browser.
+#### Terminal 3: Frontend 💻
+Serve the static frontend files.
+```bash
+python -m http.server 8080 --directory frontend
+```
+*   Open your browser to: `http://localhost:8080`
 
-## 🧪 Sample Conversations
+---
 
-**User**: What are your working hours?
-**Agent**: (Support) Our branches are open Mon-Sat, 9 AM - 5 PM.
+## 🧪 Usage Examples
 
-**User**: Check my balance.
-**Agent**: (Accounts) Your current balance is 5000.0 USD.
+Once everything is running, go to the **Frontend** (`http://localhost:8080`) and try these prompts:
 
-**User**: apply for a personal loan of 50000
-**Agent**: (Loans) Loan application for 50000 (personal limit) submitted successfully. Reference ID: 1.
+*   **Customer Support**:
+    > "What are your branch opening hours?"
+    > "How do I reset my password?"
+
+*   **Account Services**:
+    > "What is my current balance?"
+    > "Show me my last 5 transactions."
+
+*   **Loans & Services**:
+    > "I want to apply for a personal loan of $50,000"
+    > "Request new cheque book"
+
+**Checking Results**: After making a request (like a loan application), go to the **Dashboard** (`http://localhost:8501`) under the "Service Requests" tab to see it appear in real-time!
+
+---
+
+## 🛠️ Tech Stack
+
+*   **Language**: Python 3.9+
+*   **Web Framework**: FastAPI
+*   **Database**: SQLite + SQLAlchemy
+*   **AI/LLM**: LangChain + Google Gemini 1.5 Flash
+*   **Dashboard**: Streamlit
+*   **Frontend**: HTML5, CSS3, JavaScript (Fetch API)
+
+---
+
+## ⚠️ Troubleshooting
+
+1.  **Database Errors**: If you see DB connection errors, try deleting `app.db` and restarting the backend to re-seed data.
+2.  **API Key Errors**: Ensure `GEMINI_API_KEY` is set correctly in `.env` and you have quota available.
+3.  **CORS Issues**: The backend is configured to allow all origins (`*`) for development ease.
