@@ -203,22 +203,18 @@ def main():
         with tabs[1]:
             history = db.query(ServiceRequest).join(User).filter(ServiceRequest.status.in_(["Approved", "Rejected"])).order_by(ServiceRequest.timestamp.desc()).limit(50).all()
             
-            if history:
-                for req in history:
-                    with st.expander(f"{req.timestamp.strftime('%Y-%m-%d')} | {req.service_type} - {req.status}"):
-                        c1, c2 = st.columns([4, 1])
-                        with c1:
-                            st.write(f"**Customer:** {req.owner.name}")
-                            st.write(f"**Details:** {req.details}")
-                            st.caption(f"ID: {req.id}")
-                        with c2:
-                            if st.button("🗑️ Delete", key=f"del_{req.id}"):
-                                db.delete(req)
-                                db.commit()
-                                st.success("Deleted.")
-                                st.rerun()
+            data = [{
+                "ID": r.id,
+                "Customer": r.owner.name,
+                "Type": r.service_type,
+                "Status": r.status,
+                "Date": r.timestamp.strftime("%Y-%m-%d")
+            } for r in history]
+            
+            if data:
+                st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
             else:
-                st.caption("No history to show.")
+                st.caption("No history yet.")
 
 if __name__ == "__main__":
     main()
