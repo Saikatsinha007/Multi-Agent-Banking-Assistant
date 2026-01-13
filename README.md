@@ -21,18 +21,18 @@ The system is built using a modern decoupled architecture:
 
 ```mermaid
 graph TD
-    User([👤 User]) -->|Chat| Frontend[💻 Frontend (HTML/JS)]
-    Staff([👨‍💼 Bank Staff]) -->|Manage| Dashboard[📊 Streamlit Dashboard]
+    User(["👤 User"]) -->|Chat| Frontend["💻 Frontend (HTML/JS)"]
+    Staff(["👨‍💼 Bank Staff"]) -->|Manage| Dashboard["📊 Streamlit Dashboard"]
     
-    Frontend -->|POST /chat| Backend[🚀 Backend API (FastAPI)]
+    Frontend -->|POST /chat| Backend["🚀 Backend API (FastAPI)"]
     
     subgraph "Backend System"
-        Backend --> Orchestrator{🧭 Orchestrator}
-        Orchestrator -->|General Queries| Support[💬 Support Agent]
-        Orchestrator -->|Balance/Txns| Accounts[💰 Accounts Agent]
-        Orchestrator -->|Loans/Services| Loans[📝 Loans Agent]
+        Backend --> Orchestrator{"🧭 Orchestrator"}
+        Orchestrator -->|General Queries| Support["💬 Support Agent"]
+        Orchestrator -->|Balance/Txns| Accounts["💰 Accounts Agent"]
+        Orchestrator -->|Loans/Services| Loans["📝 Loans Agent"]
         
-        Accounts <--> DB[(🗄️ SQLite Database)]
+        Accounts <--> DB[("🗄️ SQLite Database")]
         Loans <--> DB
     end
     
