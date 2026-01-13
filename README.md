@@ -12,6 +12,10 @@ This project implements a "NeoBank" style system where customers can interact wi
 *   **💳 Core Banking Operations**: Check balances, view transaction history, and detailed mock financial data.
 *   **📝 Service Request Management**: Submit loan applications and service requests via chat.
 *   **📊 Admin Dashboard**: A real-time Streamlit dashboard for bank staff to view metrics, approve/reject requests, and analyze data.
+  
+<img width="871" height="678" alt="Screenshot 2026-01-13 095440" src="https://github.com/user-attachments/assets/09103a77-7a26-45f2-8c9f-56b360097be2" />
+<img width="871" height="678" alt="Screenshot 2026-01-13 095502" src="https://github.com/user-attachments/assets/1e0a21ef-814e-499a-b9de-d99c02287963" />
+
 
 ---
 
